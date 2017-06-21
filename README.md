@@ -1,24 +1,28 @@
-sqlite3-cmake
-=============
+# sqlite3-cmake
 
-Simplest CMake script + full sqlite3 amalgamation distibution to build with different compilers
+[SQLite3](https://sqlite.org/download.html) built using CMake.
 
-Build examples:
+## Getting Started
+
+Download and install [CMake](https://cmake.org/download/).
+
+This requires at least CMake 3.8+ purely as a learning exercise in modern CMake
+and to educate other CMake authors to keep up to date.
+
+Centos and Ubuntu package managers only ship CMake 3.6 so you will want to 
+download and install from the website to ensure you have the actual latest CMake.
+
+
+## Windows
 
 On Windows from Visual Studio command prompt
+
 ```
-  cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=d:/libs
-  nmake install
+  cmake -Bbuild -H.  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./distrib
 ```
 
-On Windows from Visual Studio IDE
+## Linux / OSX
 ```
-  cmake -G "Visual Studio 12 Win64" -DCMAKE_INSTALL_PREFIX=d:/libs
-  < open and build sqlite3.sln >
-```
-
-On Linux/FreeBSD without root access
-```
-  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/student/libs
-  make install
+  cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./distrib
+  cmake --build build --target install 
 ``` 
