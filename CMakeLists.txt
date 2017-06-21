@@ -38,7 +38,10 @@ target_include_directories(sqlite
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src
 )
-set_target_properties(sqlite PROPERTIES OUTPUT_NAME sqlite3)
+set_target_properties(sqlite 
+  PROPERTIES 
+    OUTPUT_NAME sqlite3
+)
 target_compile_definitions(sqlite
   PRIVATE
   -DSQLITE_ENABLE_RTREE
@@ -56,14 +59,14 @@ install(
     src/sqlite3.h 
     src/sqlite3ext.h 
   DESTINATION 
-    ${PROJECT_NAME}/${PROJECT_VERSION}/include
+    ${CMAKE_SYSTEM_NAME}/${PROJECT_NAME}/${PROJECT_VERSION}/include
 )
 
 install(TARGETS sqlite3 
-  LIBRARY DESTINATION ${PROJECT_NAME}/${PROJECT_VERSION}/lib 
-  ARCHIVE DESTINATION ${PROJECT_NAME}/${PROJECT_VERSION}/lib
+  LIBRARY DESTINATION ${CMAKE_SYSTEM_NAME}/${PROJECT_NAME}/${PROJECT_VERSION}/lib 
+  ARCHIVE DESTINATION ${CMAKE_SYSTEM_NAME}/${PROJECT_NAME}/${PROJECT_VERSION}/lib
 )
 
 install(TARGETS sqlite 
-  RUNTIME DESTINATION ${PROJECT_NAME}/${PROJECT_VERSION}/bin
+  RUNTIME DESTINATION ${CMAKE_SYSTEM_NAME}/${PROJECT_NAME}/${PROJECT_VERSION}/bin
 )

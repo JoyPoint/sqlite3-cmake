@@ -22,4 +22,12 @@ download and install from the website to ensure you have the actual latest CMake
   cmake --build build --target install 
 ```
 
-Installs to `./dist/sqlite3/3.19.3.0/` 
+Installs to `./dist/${CMAKE_SYSTEM_NAME}/${PROJECT_NAME}/${PROJECT_VERSION}/`
+
+eg, 
+```
+./dist/Darwin/sqlite3/3.19.3.0
+  |-- include
+  |-- lib
+  \-- bin
+```
