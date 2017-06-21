@@ -13,17 +13,13 @@ Centos and Ubuntu package managers only ship CMake 3.6 so you will want to
 download and install from the website to ensure you have the actual latest CMake.
 
 
-## Windows
-
-On Windows from Visual Studio command prompt
+## Getting Started
 
 ```
-  cmake -Bbuild -H.  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./distrib
+  git clone https://github.com/dexata/sqlite3-cmake.git sqlite3-cmake
+  cd sqlite3-cmake
+  cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./dist
   cmake --build build --target install 
 ```
 
-## Linux / OSX
-```
-  cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./distrib
-  cmake --build build --target install 
-``` 
+Installs to `./dist/sqlite3/3.19.3.0/` 

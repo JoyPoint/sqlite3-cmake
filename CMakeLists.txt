@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
-project(sqlite3)
+project(sqlite3 
+  VERSION 3.19.3.0
+  LANGUAGES C
+)
 
 #############
 # LIB sqlite3
@@ -53,14 +56,14 @@ install(
     src/sqlite3.h 
     src/sqlite3ext.h 
   DESTINATION 
-    include
+    ${PROJECT_NAME}/${PROJECT_VERSION}/include
 )
 
 install(TARGETS sqlite3 
-  LIBRARY DESTINATION lib 
-  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION ${PROJECT_NAME}/${PROJECT_VERSION}/lib 
+  ARCHIVE DESTINATION ${PROJECT_NAME}/${PROJECT_VERSION}/lib
 )
 
 install(TARGETS sqlite 
-  RUNTIME DESTINATION bin
+  RUNTIME DESTINATION ${PROJECT_NAME}/${PROJECT_VERSION}/bin
 )
