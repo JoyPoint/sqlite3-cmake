@@ -19,6 +19,7 @@ On Windows from Visual Studio command prompt
 
 ```
   cmake -Bbuild -H.  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./distrib
+  cmake --build build --target install 
 ```
 
 ## Linux / OSX
