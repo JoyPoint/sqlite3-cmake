@@ -18,15 +18,22 @@ download and install from the website to ensure you have the actual latest CMake
 ```
   git clone https://github.com/dexata/sqlite3-cmake.git sqlite3-cmake
   cd sqlite3-cmake
+
+  # Defaults to building static library
   cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./dist
   cmake --build build --target install 
+
+  # Reconfigure for shared library
+  cmake -Bbuild -H. -DBUILD_SHARED_LIBS=ON
+  cmake --build build --target install 
+
 ```
 
-Installs to `./dist/${CMAKE_SYSTEM_NAME}/${PROJECT_NAME}/${PROJECT_VERSION}/`
+Installs to `./dist/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/`
 
 eg, 
 ```
-./dist/Darwin/sqlite3/3.19.3.0
+./dist/Darwin/Release/sqlite3/3.19.3.0
   |-- include
   |-- lib
   \-- bin
