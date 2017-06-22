@@ -70,3 +70,42 @@ install(TARGETS sqlite3
 install(TARGETS sqlite 
   RUNTIME DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/bin
 )
+
+#########
+# PACKAGE
+#########
+include (InstallRequiredSystemLibraries)
+
+set(CPACK_GENERATOR "ZIP;TGZ")
+set(CPACK_PACKAGE_VENDOR "SQLite")
+# set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "")
+# set(CPACK_PACKAGE_DESCRIPTION_FILE "")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "${PROJECT_NAME}-${PROJECT_VERSION}")
+
+IF(WIN32 AND NOT UNIX)
+  # There is a bug in NSI that does not handle full unix paths properly. Make
+  # sure there is at least one set of four (4) backlasshes.
+  # set(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
+  set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\${PROJECT_NAME}.exe")
+  set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY}")
+  set(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.sqlite.org")
+  set(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.sqlite.org/about.html")
+  set(CPACK_NSIS_CONTACT "")
+  set(CPACK_NSIS_MODIFY_PATH ON)
+ELSE(WIN32 AND NOT UNIX)
+  set(CPACK_STRIP_FILES "bin/${PROJECT_NAME}")
+  set(CPACK_SOURCE_STRIP_FILES "")
+ENDIF(WIN32 AND NOT UNIX)
+set(CPACK_PACKAGE_EXECUTABLES sqlite ${PROJECT_NAME})
+
+
+# Packages build to:
+# http://stackoverflow.com/a/16942262/622276
+set(CPACK_OUTPUT_FILE_PREFIX dist)
+
+include(CPack)

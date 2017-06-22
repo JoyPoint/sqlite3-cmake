@@ -38,3 +38,16 @@ eg,
   |-- lib
   \-- bin
 ```
+
+## Packaging
+
+```
+  cmake --build build --target package
+```
+
+Output builds to `build/dist`.
+
+Note that the default packaging is a zip for this project and the `install`
+target is a dependency of `package`. So you get the same structure from `install`
+within the resulting zip.
+
