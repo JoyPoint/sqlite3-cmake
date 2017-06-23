@@ -33,18 +33,80 @@ download and install from the website to ensure you have the actual latest CMake
 
 ```
 
-Installs to `./dist/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/`
+Installs to `./dist/${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${PROJECT_NAME}-${PROJECT_VERSION}/`
 
 eg, 
 ```
-./dist/Darwin/Release/sqlite3/3.19.3.0
+./dist/Darwin-Release/sqlite3-3.19.3.0
   |-- include
   |-- lib
-  \-- bin
+  |-- bin
+  \-- cmake/sqlite3/Sqlite3Config.cmake
 
-./dist/share/cmake/sqlite3
-  \-- sqlite3-config.cmake
 ```
+
+This is so that for the different permutations of Platform, build type and 
+version can be installed and not collide.
+
+The exported `Sqlite3Config.cmake` bakes in the paths for that version.
+
+## Windows
+
+If you haven't discovered [Chocolatey](https://chocolatey.org/), a package 
+manager for windows, you should go get it now.
+
+Then from a command prompt with Administrative rights:
+```
+choco install cmake --installargs 'ADD_CMAKE_TO_PATH=""System""' -y
+choco install ninja -y
+
+:: Reload PATH variable
+refreshenv
+```
+
+The benefits of CMake using a cache to point to it's defined compilers and
+build system mean I can do things like the following. I have multiple build 
+pipelines available side by side.
+
+```
+:: You may need to init Visual Studio variables
+:: VS2013
+"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x64
+cmake -H. -Bbuild-vs2013 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./dist/vs2013
+```
+
+Then in a new command prompt:
+
+```
+:: VS2017
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+cmake -H. -Bbuild-vs2017 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./dist/vs2017
+```
+
+Also in a new command prompt:
+
+```
+:: VS2017
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+cmake -H. -Bbuild-vs2017-ninja -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./dist/vs2017-ninja
+```
+
+Then I can run the following:
+
+```
+cmake --build build-vs2013 --target install
+cmake --build build-vs2017 --target install
+cmake --build build-vs2017-ninja --target install
+```
+
+If you want to get build times:
+
+```
+cmake -E time cmake --build build-vs2013 --target install
+cmake -E time cmake --build build-vs2017 --target install
+cmake -E time cmake --build build-vs2017-ninja --target install
+```
+
 
 ## Packaging
 

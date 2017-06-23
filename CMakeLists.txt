@@ -61,31 +61,38 @@ endif(NOT BUILD_LIB_ONLY)
 # INSTALL 
 #########
 
+# Installation sub path to avoid overriding different versions and 
+# release types when installing
+set(INSTALL_SUBDIRS "${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${PROJECT_NAME}-${PROJECT_VERSION}")
+
 ### Install Headers
 install(
   FILES 
     src/sqlite3.h 
     src/sqlite3ext.h 
   DESTINATION 
-  ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/include
+    ${INSTALL_SUBDIRS}/include
 )
 
 ### Install Library and add to CMake Export Config
 install(TARGETS sqlite3 
-  DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/lib
-  EXPORT sqlite3-config
+  EXPORT Sqlite3Config
+  LIBRARY DESTINATION ${INSTALL_SUBDIRS}/lib
+  ARCHIVE DESTINATION ${INSTALL_SUBDIRS}/lib
+  INCLUDES DESTINATION ${INSTALL_SUBDIRS}/include
 )
 
 ### Install Binary
 if(NOT BUILD_LIB_ONLY)
   install(TARGETS sqlite 
-    RUNTIME DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/bin
+    RUNTIME DESTINATION ${INSTALL_SUBDIRS}/bin
   )
 endif(NOT BUILD_LIB_ONLY)
 
 ### Generate Export Config sqlite3-config.cmake
-install(EXPORT sqlite3-config 
-  DESTINATION share/cmake/sqlite3
+install(EXPORT Sqlite3Config 
+  NAMESPACE SQLITE3::
+  DESTINATION ${INSTALL_SUBDIRS}/cmake/sqlite3
 )
 
 #########
