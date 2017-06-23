@@ -10,7 +10,8 @@ project(sqlite3
 add_library(sqlite3
   src/sqlite3.c 
   src/sqlite3.h 
-  src/sqlite3ext.h)
+  src/sqlite3ext.h
+)
 target_include_directories(sqlite3 
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src
@@ -28,32 +29,39 @@ target_compile_definitions(sqlite3
 #############
 # BIN sqlite3
 #############
-add_executable(sqlite 
-  src/sqlite3.c 
-  src/shell.c 
-  src/sqlite3.h 
-  src/sqlite3ext.h
-)
-target_include_directories(sqlite 
-  PRIVATE
-    ${CMAKE_SOURCE_DIR}/src
-)
-set_target_properties(sqlite 
-  PROPERTIES 
-    OUTPUT_NAME sqlite3
-)
-target_compile_definitions(sqlite
-  PRIVATE
-  -DSQLITE_ENABLE_RTREE
-  -DSQLITE_ENABLE_FTS4
-  -DSQLITE_ENABLE_FTS5
-  -DSQLITE_ENABLE_JSON1
-  -DSQLITE_ENABLE_UNLOCK_NOTIFY
-)
+option(BUILD_LIB_ONLY "Only build the library" OFF)
+
+if(NOT BUILD_LIB_ONLY)
+  add_executable(sqlite 
+    src/sqlite3.c 
+    src/shell.c 
+    src/sqlite3.h 
+    src/sqlite3ext.h
+  )
+  target_include_directories(sqlite 
+    PRIVATE
+      ${CMAKE_SOURCE_DIR}/src
+  )
+  
+  set_target_properties(sqlite 
+    PROPERTIES 
+      OUTPUT_NAME sqlite3
+  )
+  target_compile_definitions(sqlite
+    PRIVATE
+    -DSQLITE_ENABLE_RTREE
+    -DSQLITE_ENABLE_FTS4
+    -DSQLITE_ENABLE_FTS5
+    -DSQLITE_ENABLE_JSON1
+    -DSQLITE_ENABLE_UNLOCK_NOTIFY
+  )
+endif(NOT BUILD_LIB_ONLY)
 
 #########
 # INSTALL 
 #########
+
+### Install Headers
 install(
   FILES 
     src/sqlite3.h 
@@ -62,13 +70,22 @@ install(
   ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/include
 )
 
+### Install Library and add to CMake Export Config
 install(TARGETS sqlite3 
-  LIBRARY DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/lib 
-  ARCHIVE DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/lib
+  DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/lib
+  EXPORT sqlite3-config
 )
 
-install(TARGETS sqlite 
-  RUNTIME DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/bin
+### Install Binary
+if(NOT BUILD_LIB_ONLY)
+  install(TARGETS sqlite 
+    RUNTIME DESTINATION ${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/bin
+  )
+endif(NOT BUILD_LIB_ONLY)
+
+### Generate Export Config sqlite3-config.cmake
+install(EXPORT sqlite3-config 
+  DESTINATION share/cmake/sqlite3
 )
 
 #########

@@ -27,6 +27,10 @@ download and install from the website to ensure you have the actual latest CMake
   cmake -Bbuild -H. -DBUILD_SHARED_LIBS=ON
   cmake --build build --target install 
 
+  # Reconfigure to skip building the binary
+  cmake -Bbuild -H. -DBUILD_LIB_ONLY=ON
+  cmake --build build --target install 
+
 ```
 
 Installs to `./dist/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}/${PROJECT_VERSION}/`
@@ -37,6 +41,9 @@ eg,
   |-- include
   |-- lib
   \-- bin
+
+./dist/share/cmake/sqlite3
+  \-- sqlite3-config.cmake
 ```
 
 ## Packaging
