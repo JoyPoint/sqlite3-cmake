@@ -33,15 +33,15 @@ download and install from the website to ensure you have the actual latest CMake
 
 ```
 
-Installs to `./dist/${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${PROJECT_NAME}-${PROJECT_VERSION}/`
+Installs to `./dist/${CMAKE_SYSTEM_NAME}/`
 
 eg, 
 ```
-./dist/Darwin-Release/sqlite3-3.19.3.0
-  |-- include
-  |-- lib
+./dist/Darwin/
+  |-- include/sqlite3/*.h
+  |-- lib/sqlite3/*.a
   |-- bin
-  \-- cmake/sqlite3/Sqlite3Config.cmake
+  \-- cmake/sqlite3-config.cmake
 
 ```
 
