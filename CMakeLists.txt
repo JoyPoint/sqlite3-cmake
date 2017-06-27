@@ -70,6 +70,11 @@ endif(NOT BUILD_LIB_ONLY)
 # release types when installing
 set(INSTALL_SUBDIRS "${CMAKE_SYSTEM_NAME}/")
 
+# Generate Version File
+configure_file(
+  "${CMAKE_SOURCE_DIR}/cmake/library-config-version.cmake.in"
+  "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake" @ONLY
+)
 ### Install Headers
 install(
   FILES 
@@ -99,6 +104,12 @@ endif(NOT BUILD_LIB_ONLY)
 install(EXPORT sqlite3-config 
   NAMESPACE SQLITE3::
   DESTINATION ${INSTALL_SUBDIRS}cmake
+)
+install(
+  FILES 
+  ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake 
+  DESTINATION 
+  ${INSTALL_SUBDIRS}cmake
 )
 
 
