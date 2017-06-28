@@ -41,14 +41,15 @@ eg,
   |-- include/sqlite3/*.h
   |-- lib/sqlite3/*.a
   |-- bin
-  \-- cmake/sqlite3-config.cmake
+  |-- cmake/sqlite3-config.cmake
+  \-- cmake/sqlite3-config-version.cmake
 
 ```
 
 This is so that for the different permutations of Platform, build type and 
 version can be installed and not collide.
 
-The exported `Sqlite3Config.cmake` bakes in the paths for that version.
+The exported `sqlite3-config.cmake` bakes in the paths for that version.
 
 ## Windows
 
