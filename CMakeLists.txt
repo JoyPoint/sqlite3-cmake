@@ -72,8 +72,8 @@ set(INSTALL_SUBDIRS "${CMAKE_SYSTEM_NAME}/")
 
 # Generate Version File
 configure_file(
-  "${CMAKE_SOURCE_DIR}/cmake/library-config-version.cmake.in"
-  "${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake" @ONLY
+  "${PROJECT_SOURCE_DIR}/cmake/library-config-version.cmake.in"
+  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake" @ONLY
 )
 ### Install Headers
 install(
