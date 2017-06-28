@@ -15,7 +15,7 @@ add_library(sqlite3
 )
 target_include_directories(sqlite3 
   PRIVATE
-    ${CMAKE_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/src
 )
 set_target_properties(sqlite3
   PROPERTIES 
@@ -45,7 +45,7 @@ if(NOT BUILD_LIB_ONLY)
   )
   target_include_directories(sqlite 
     PRIVATE
-      ${CMAKE_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/src
   )
   
   set_target_properties(sqlite 
@@ -107,7 +107,7 @@ install(EXPORT sqlite3-config
 )
 install(
   FILES 
-  ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake 
+  ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake 
   DESTINATION 
   ${INSTALL_SUBDIRS}cmake
 )
@@ -122,7 +122,7 @@ set(CPACK_GENERATOR "ZIP;TGZ")
 set(CPACK_PACKAGE_VENDOR "SQLite")
 # set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "")
 # set(CPACK_PACKAGE_DESCRIPTION_FILE "")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
