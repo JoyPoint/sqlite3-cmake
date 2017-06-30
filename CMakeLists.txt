@@ -78,10 +78,10 @@ configure_file(
 ### Install Headers
 install(
   FILES 
-    src/sqlite3.h 
-    src/sqlite3ext.h 
+    ${PROJECT_SOURCE_DIR}/src/sqlite3.h 
+    ${PROJECT_SOURCE_DIR}/src/sqlite3ext.h 
   DESTINATION 
-  ${INSTALL_SUBDIRS}include/${PROJECT_NAME}
+    ${INSTALL_SUBDIRS}include/${PROJECT_NAME}
 )
 
 ### Install Library and add to CMake Export Config
